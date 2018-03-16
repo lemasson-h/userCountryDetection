@@ -34,4 +34,17 @@ class CountryRepository extends ServiceEntityRepository
 
         return $country;
     }
+
+    /**
+     * @param Country $country
+     *
+     * @return CountryRepository
+     */
+    public function save(Country $country): CountryRepository
+    {
+        $this->_em->persist($country);
+        $this->_em->flush();
+
+        return $this;
+    }
 }

@@ -35,4 +35,17 @@ class QueueRepository extends ServiceEntityRepository
 
         return $queue;
     }
+
+    /**
+     * @param Queue $queue
+     *
+     * @return QueueRepository
+     */
+    public function delete(Queue $queue): QueueRepository
+    {
+        $this->_em->remove($queue);
+        $this->_em->flush();
+
+        return $this;
+    }
 }

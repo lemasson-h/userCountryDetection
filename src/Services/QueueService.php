@@ -63,4 +63,22 @@ class QueueService
 
         return $this;
     }
+
+    /**
+     * @param Country $country
+     *
+     * @return QueueService
+     */
+    public function validMessage(Country $country): QueueService
+    {
+        $queued = $this->queueRepository->findOneBy(['country' => $country]);
+
+        if ($queued instanceof Queue === false) {
+            return $this;
+        }
+
+        $this->queueRepository->delete($queued);
+
+        return $this;
+    }
 }

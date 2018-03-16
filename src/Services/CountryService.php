@@ -54,4 +54,37 @@ class CountryService
 
         return $country;
     }
+
+    /**
+     * @param string $code
+     *
+     * @return Country|null
+     */
+    public function getCountryByCode(string $code)
+    {
+        return $this->countryRepository->findOneBy(['code' => $code]);
+    }
+
+    /**
+     * @param \stdClass $soapCountry
+     *
+     * @return null|Country
+     */
+    public function updateCountry(\stdClass $soapCountry)
+    {
+        $country = $this->countryRepository->findOneBy(['code' => $soapCountry->code]);
+
+        if (null === $country) {
+            return null;
+        }
+
+        $country->setName($soapCountry->name);
+        $country->setPopulation($soapCountry->population);
+        $country->setCapital($soapCountry->capital);
+        $country->setCurrency($soapCountry->currency);
+
+        $this->countryRepository->save($country);
+
+        return $country;
+    }
 }

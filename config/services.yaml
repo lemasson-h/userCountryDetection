@@ -31,7 +31,7 @@ services:
     App\Client\LocalisationClient:
       arguments:
         $config:
-          base_uri: "http://ip-api.com"
+          base_uri: "%env(API_LOCATION)%"
 
     App\Client\MessageClient:
       arguments:
@@ -40,3 +40,13 @@ services:
         - 'guest'
         - 'guest'
         - '%env(QUEUE_NAME)%'
+
+    app.soap.country:
+      class: SoapClient
+      autowire: true
+      arguments:
+        - "%env(SOAP_COUNTRY)%"
+
+    App\Services\MessageService:
+      arguments:
+        SoapClient: '@app.soap.country'
