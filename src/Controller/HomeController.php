@@ -18,14 +18,14 @@ class HomeController extends Controller
         Request $request,
         UserService $userService
     ) {
-        $ip = '151.230.64.78';//$request->getClientIp();
+        $ip = $request->getClientIp();
 
-        $country = $userService->getLocalisation($ip);
-
-        var_dump($country->getId());
-
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-        ]);
+        return $this->render(
+            'home/index.html.twig',
+            [
+                'ip' => $ip,
+                'country' => $userService->getLocalisation($ip)
+            ]
+        );
     }
 }

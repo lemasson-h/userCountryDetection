@@ -30,8 +30,15 @@ services:
 
     App\Client\LocalisationClient:
       arguments:
+        $client: "@app.client.localisation"
+
+    app.client.localisation:
+      class: GuzzleHttp\Client
+      autowire: true
+      arguments:
         $config:
           base_uri: "%env(API_LOCATION)%"
+
 
     App\Client\MessageClient:
       arguments:

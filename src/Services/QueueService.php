@@ -57,6 +57,8 @@ class QueueService
             $this->messageClient->sendMessage($country->getCode());
         } catch (\Exception $e) {
             $this->logger->error(sprintf('Unable to send message to the queue, got "%s".', $e->getMessage()));
+
+            return $this;
         }
 
         $this->queueRepository->create($country);

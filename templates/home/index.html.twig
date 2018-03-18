@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ controller_name }}!{% endblock %}
+{% block title %}User Localisation{% endblock %}
 
 {% block body %}
 <style>
@@ -9,12 +9,22 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Hello {{ ip }}!</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>src/Controller/UserController.php</code></li>
-        <li>Your template at <code>templates/user/index.html.twig</code></li>
-    </ul>
+    {% if country.name is not null %}
+    <div>
+        <h1>You live in {{ country.name }}</h1>
+        <div>
+            <p>Other information</p>
+            <ul>
+                <li>Capital: {{ country.capital }}</li>
+                <li>Population: {{ country.population }}</li>
+                <li>Currency: {{ country.currency }}</li>
+            </ul>
+        </div>
+    </div>
+    {% else %}
+        <p>We don't know yet where you are localised.</p>
+    {% endif %}
 </div>
 {% endblock %}

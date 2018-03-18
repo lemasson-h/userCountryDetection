@@ -123,4 +123,36 @@ class Country
     {
         return $this->id;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPopulation()
+    {
+        return $this->population;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCapital()
+    {
+        return $this->capital;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
 }

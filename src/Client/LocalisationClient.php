@@ -7,16 +7,26 @@ use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-class LocalisationClient extends Client
+class LocalisationClient
 {
+    /**
+     * @var Client
+     */
+    private $client;
+
     /**
      * @var LoggerInterface
      */
     private $logger;
 
-    public function __construct(array $config = [], LoggerInterface $logger)
+    /**
+     * @param Client          $client
+     * @param LoggerInterface $logger
+     */
+    public function __construct(Client $client, LoggerInterface $logger)
     {
-        parent::__construct($config);
+        $this->client = $client;
+        $this->logger = $logger;
     }
 
     /**
@@ -29,7 +39,7 @@ class LocalisationClient extends Client
     public function getCountryInformation(string $ip)
     {
         try {
-            $response = $this->get(sprintf('/json/%s', $ip));
+            $response = $this->client->get(sprintf('/json/%s', $ip));
         } catch (GuzzleException $e) {
             $response = $e->getResponse();
             $this->logger->error(sprintf(
@@ -47,6 +57,6 @@ class LocalisationClient extends Client
             return $body['countryCode'];
         }
 
-        throw new \Exception(sprintf('Invalid response from the api for ip "%s".'));
+        throw new \Exception(sprintf('Invalid response from the api for ip "%s".', $ip));
     }
 }
